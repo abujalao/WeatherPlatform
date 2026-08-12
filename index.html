@@ -9,7 +9,7 @@
     <nav class="navigation">
         <div class="nav-left">
             <img src="src/Cloud.png" class="img-cloud">
-            <!--<p class="center-text">Weatherly</p>-->
+            <p class="left-title">Weatherly</p>
         </div>
         <div class="nav-center">
             <button class="button-unit-toggle" id="unit-toggle">
@@ -26,7 +26,7 @@
     </nav>
     <section class="section-main">
         <div class="main-info">
-            <h1 class="city-name">Dubai</h1>
+            <h1 class="city-name">New York</h1>
             <h2 class="temp">16&#176;</h2>
         </div>
         <div>
@@ -37,16 +37,58 @@
 
     <section class="section-forecast">
         <div class="forecast-frame">
+            
             <div class="forecast-item">
                 <p class="forecast-time">6:00 PM</p>
                 <img class="forecast-icon" src="src/sunny.png">
                 <p class="forecast-temp">19&#176;</p>
             </div>
+
         </div>
     </section>
 
     <section class="section-stats">
+        <div class="stats-frame">
+            <div>
+                <p class="stat-text">Weather Condition</p>
+                <br />
+            </div>
+            <div class="data-row-grid">
 
+                <div class="data-item">
+                    <img class="data-img" src="src/wind.png" > 
+                    <div class="data-text-group">
+                        <p class="data-name">Wind Speed</p>
+                        <p class="data-value">0 <span class="speed-unit">km/h</span></p>
+                    </div>
+                </div>
+
+                <div class="data-item">
+                    <img class="data-img" src="src/humidity.png"> 
+                    <div class="data-text-group">
+                        <p class="data-name">Humidity</p>
+                        <p class="data-value">0 <span class="speed-unit">%</span></p>
+                    </div>
+                </div>
+
+                <div class="data-item">
+                    <img class="data-img" src="src/rain.png"> 
+                    <div class="data-text-group">
+                        <p class="data-name">Chance of rain</p>
+                        <p class="data-value">0 <span class="speed-unit">%</span></p>
+                    </div>
+                </div>
+
+                <div class="data-item">
+                    <img class="data-img" src="src/uvIndex.png"> 
+                    <div class="data-text-group">
+                        <p class="data-name">UV Index</p>
+                        <p class="data-value">0</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </section>
 </body>
 </html>
