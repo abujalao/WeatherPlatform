@@ -1,6 +1,6 @@
 const myApiKey = CONFIG.WEATHER_API_KEY;
 const SEARCH_RESULT_LIMIT = 5
-const FORECAST_STAMPS = 9;
+const FORECAST_STAMPS = 8;
 let tempMode = false //0 celsius, 1 fahrenheit
 
 export async function fetchForecast(lat,lon) {
@@ -31,7 +31,7 @@ export async function fetchWeather(lat,lon) {
 
 export async function fetchLocation(userInput) {
     try {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${userInput}&limit=${SEARCH_RESULT_LIMIT}&appid=${myApiKey}`);
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${userInput}&limit=${SEARCH_RESULT_LIMIT}&appid=${myApiKey}`);
         if (response.ok) {
             return await response.json();
         } else {
