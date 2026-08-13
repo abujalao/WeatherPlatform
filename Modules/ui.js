@@ -1,4 +1,5 @@
 import { fetchLocation, fetchWeather, fetchForecast } from './api.js';
+import { iconFolder, iconMapping } from './iconMapping.js';
 
 export const searchBtn = document.querySelector('.button-search');
 export const searchInput = document.querySelector('.input-search');
@@ -12,6 +13,8 @@ const humidity = document.querySelector('.data-value-humidity')
 const windSpeed = document.querySelector('.data-value-wind')
 const pressure = document.querySelector('.data-value-pressure')
 const forecastFrame = document.querySelector('.forecast-frame')
+const mainWeatherIcon = document.querySelector('.weather-state-icon')
+
 
 export function toggleSearch() {
     searchInput.classList.toggle('active');
@@ -23,23 +26,36 @@ export function toggleSearch() {
     }
 }
 
-export function displayWeather(weather,forecast){
-    cityName.innerHTML = weather.name;
+function getIcon(id,icon) {
+    let iconCode = id+"-"+icon;
+    if (!iconMapping[iconCode]) {
+        iconCode="000-000"
+    }
+    return iconFolder+iconMapping[iconCode]
+
+}
+export function displayWeather(weather,forecast,city){
+    cityName.innerHTML = city;
     temp.innerHTML = Math.round(weather.main.temp);
     windSpeed.innerHTML = weather.wind.speed;
     humidity.innerHTML= weather.main.humidity;
     pressure.innerHTML = weather.main.pressure;
     visibility.innerHTML = weather.visibility/1000;
+    const imageAddress = getIcon(weather.weather[0].id, weather.weather[0].icon);
+    mainWeatherIcon.src = imageAddress;
     forecastFrame.innerHTML=""
-    let result=""
-    console.log(forecast)
+    let result=`<div class="forecast-item">
+                <p class="forecast-time">Now</p>
+                <img class="forecast-icon" src="${getIcon(weather.weather[0].id, weather.weather[0].icon)}">
+                <p class="forecast-temp"><span class="forecast-value">${Math.round(weather.main.temp)}</span>&#176;</p>
+            </div>`
     const stampArray = forecast.list
     stampArray.forEach((stamp) => {
-        const date = new Date(stamp.dt * 1000);
-        const timeString = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        const date = new Date((stamp.dt + forecast.city.timezone) * 1000);
+        const timeString = date.toLocaleTimeString([], { timeZone: 'UTC', hour: 'numeric', minute: '2-digit' });
         result+=`<div class="forecast-item">
                 <p class="forecast-time">${timeString}</p>
-                <img class="forecast-icon" src="src/sunny.png">
+                <img class="forecast-icon" src="${getIcon(stamp.weather[0].id, stamp.weather[0].icon)}">
                 <p class="forecast-temp"><span class="forecast-value">${Math.round(stamp.main.temp)}</span>&#176;</p>
             </div>`
     });

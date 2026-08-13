@@ -263,6 +263,20 @@ img {
     gap:1rem;
     overflow-x: auto;
 }
+.forecast-frame::-webkit-scrollbar {
+    height: 0.5rem;
+}
+.forecast-frame::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+.forecast-frame::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 10px;
+}
+.forecast-frame::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 167, 255, 0.489);
+}
 
 .stats-frame {
     flex-direction: column;
@@ -270,7 +284,7 @@ img {
 
 .forecast-item {
     display: flex;
-    flex:1;
+    flex: 0 0 5rem;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -288,10 +302,10 @@ img {
     margin:0 0 0.8rem 0;
 }
 .forecast-temp {
-    margin: 0.8rem 0 0 0;
+    margin: 0.2rem 0 0 0;
 }
 .forecast-icon {
-    width: 2rem; 
+    width: 4rem; 
     height:auto
 }
 

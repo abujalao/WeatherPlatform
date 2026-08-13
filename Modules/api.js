@@ -1,6 +1,6 @@
 const myApiKey = CONFIG.WEATHER_API_KEY;
 const SEARCH_RESULT_LIMIT = 5
-const FORECAST_STAMPS = 10;
+const FORECAST_STAMPS = 9;
 let tempMode = false //0 celsius, 1 fahrenheit
 
 export async function fetchForecast(lat,lon) {

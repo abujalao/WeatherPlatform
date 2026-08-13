@@ -7,7 +7,7 @@ async function setCity(location) {
     currentLatLon[1] = location.lon;
     const weather = await api.fetchWeather(location.lat,location.lon);
     const forecast = await api.fetchForecast(location.lat,location.lon);
-    displayWeather(weather, forecast);
+    displayWeather(weather, forecast,location.name);
 }
 
 async function searchLocation(userInput) {
