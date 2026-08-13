@@ -20,7 +20,7 @@
         <div class="nav-right">
 
             <div class="section-search">
-                <input class="input-search" placeholder="City name or ZIP code">
+                <input class="input-search" placeholder="City name">
                 <div class="result-frame">
                     <!-- <button class="button-result">Dubai, UAE</button> -->
                 </div>
@@ -34,8 +34,8 @@
     </nav>
     <section class="section-main">
         <div class="main-info">
-            <h1 class="city-name">New York</h1>
-            <h2 class="temp"><span class="data-temp">16</span>&#176;</h2>
+            <h1 class="city-name">City</h1>
+            <h2 class="temp"><span class="data-temp">0</span>&#176;</h2>
         </div>
         <div>
             <img class="weather-state-icon" src="src/sunny.png">
@@ -46,11 +46,11 @@
     <section class="section-forecast">
         <div class="forecast-frame">
             
-            <div class="forecast-item">
+            <!--<div class="forecast-item">
                 <p class="forecast-time">6:00 PM</p>
                 <img class="forecast-icon" src="src/sunny.png">
-                <p class="forecast-temp">19&#176;</p>
-            </div>
+                <p class="forecast-temp"><span class="forecast-value">19</span>&#176;</p>
+            </div>-->
 
         </div>
     </section>
@@ -67,7 +67,7 @@
                     <img class="data-img" src="src/wind.png" > 
                     <div class="data-text-group">
                         <p class="data-name">Wind Speed</p>
-                        <p class="data-value"><span class="data-value-wind">0</span><span class="speed-unit"> km/h</span></p>
+                        <p class="data-value"><span class="data-value-wind">0</span> <span class="speed-unit">km/h</span></p>
                     </div>
                 </div>
 
@@ -75,23 +75,23 @@
                     <img class="data-img" src="src/humidity.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Humidity</p>
-                        <p class="data-value"><span class="data-value-humidity">0</span><span class="speed-unit"> %</span></p>
+                        <p class="data-value"><span class="data-value-humidity">0</span> %</p>
                     </div>
                 </div>
 
                 <div class="data-item">
-                    <img class="data-img" src="src/rain.png"> 
+                    <img class="data-img" src="src/visibility.png"> 
                     <div class="data-text-group">
-                        <p class="data-name">Chance of rain</p>
-                        <p class="data-value"><span class="data-value-rain">0</span><span class="speed-unit"> %</span></p>
+                        <p class="data-name">Visibility</p>
+                        <p class="data-value"><span class="data-value-visibility">0</span> <span class="distance-unit">km</span></p>
                     </div>
                 </div>
 
                 <div class="data-item">
-                    <img class="data-img" src="src/uvIndex.png"> 
+                    <img class="data-img" src="src/pressure.png"> 
                     <div class="data-text-group">
-                        <p class="data-name-uv">UV Index</p>
-                        <p class="data-value">0</p>
+                        <p class="data-name">Pressure</p>
+                        <p class="data-value"><span class="data-value-pressure">0</span> hPa</p>
                     </div>
                 </div>
 
@@ -100,8 +100,9 @@
     </section>
 
 
-
     <script src="config.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="Modules/api.js"></script>
+    <script type="module" src="Modules/ui.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>

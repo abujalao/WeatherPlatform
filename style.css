@@ -254,6 +254,7 @@ img {
     display: flex;
     padding: 0.1rem 2rem;
     align-items: flex-start;
+    justify-content: flex-start;
     background-color: #2a34486e;
     border-radius: 2rem;
     width: 70%;
@@ -269,15 +270,17 @@ img {
 
 .forecast-item {
     display: flex;
+    flex:1;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding-right: 1rem;
     margin: 1rem 0;
+    white-space: nowrap;
 }
 
 .forecast-item:not(:last-child) {
-  border-right: 2px solid rgba(4, 4, 4, 0.437);
+  border-right: 2px solid rgba(29, 24, 87, 0.327);
 }
 
 .forecast-time{
