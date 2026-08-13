@@ -18,7 +18,15 @@
             </button>
         </div>
         <div class="nav-right">
-            <input class="input-search">
+
+            <div class="section-search">
+                <input class="input-search" placeholder="City name or ZIP code">
+                <div class="result-frame">
+                    <!-- <button class="button-result">Dubai, UAE</button> -->
+                </div>
+                
+            </div>
+            
             <button class="button-search">
                 <img src="src/MagnifyGlass.png" class="img-search">
             </button>
@@ -27,7 +35,7 @@
     <section class="section-main">
         <div class="main-info">
             <h1 class="city-name">New York</h1>
-            <h2 class="temp">16&#176;</h2>
+            <h2 class="temp"><span class="data-temp">16</span>&#176;</h2>
         </div>
         <div>
             <img class="weather-state-icon" src="src/sunny.png">
@@ -59,7 +67,7 @@
                     <img class="data-img" src="src/wind.png" > 
                     <div class="data-text-group">
                         <p class="data-name">Wind Speed</p>
-                        <p class="data-value">0 <span class="speed-unit">km/h</span></p>
+                        <p class="data-value"><span class="data-value-wind">0</span><span class="speed-unit"> km/h</span></p>
                     </div>
                 </div>
 
@@ -67,7 +75,7 @@
                     <img class="data-img" src="src/humidity.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Humidity</p>
-                        <p class="data-value">0 <span class="speed-unit">%</span></p>
+                        <p class="data-value"><span class="data-value-humidity">0</span><span class="speed-unit"> %</span></p>
                     </div>
                 </div>
 
@@ -75,14 +83,14 @@
                     <img class="data-img" src="src/rain.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Chance of rain</p>
-                        <p class="data-value">0 <span class="speed-unit">%</span></p>
+                        <p class="data-value"><span class="data-value-rain">0</span><span class="speed-unit"> %</span></p>
                     </div>
                 </div>
 
                 <div class="data-item">
                     <img class="data-img" src="src/uvIndex.png"> 
                     <div class="data-text-group">
-                        <p class="data-name">UV Index</p>
+                        <p class="data-name-uv">UV Index</p>
                         <p class="data-value">0</p>
                     </div>
                 </div>
@@ -90,5 +98,10 @@
             </div>
         </div>
     </section>
+
+
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
