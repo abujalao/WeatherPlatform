@@ -1,31 +1,46 @@
 import { iconFolder, iconMapping } from './iconMapping.js';
 
-export const searchBtn = document.querySelector('.button-search');
-export const searchInput = document.querySelector('.input-search');
+const searchBtn = document.querySelector('.button-search');
+const searchInput = document.querySelector('.input-search');
 
 const resultFrame = document.querySelector('.search-results-frame');
 const historyResultFrame = document.querySelector('.search-history-frame');
 
-const cityName = document.querySelector('.city-name')
-const temp = document.querySelector('.data-temp')
-const visibility = document.querySelector('.data-value-visibility')
-const humidity = document.querySelector('.data-value-humidity')
-const windSpeed = document.querySelector('.data-value-wind')
-const pressure = document.querySelector('.data-value-pressure')
-const forecastFrame = document.querySelector('.forecast-frame')
-const mainWeatherIcon = document.querySelector('.weather-state-icon')
-const description = document.querySelector('.weather-desc')
-const highTemp = document.querySelector('.temp-high')
-const lowTemp = document.querySelector('.temp-low')
+const cityName = document.querySelector('.city-name');
+const temp = document.querySelector('.data-temp');
+const visibility = document.querySelector('.data-value-visibility');
+const humidity = document.querySelector('.data-value-humidity');
+const windSpeed = document.querySelector('.data-value-wind');
+const pressure = document.querySelector('.data-value-pressure');
+const forecastFrame = document.querySelector('.forecast-frame');
+const mainWeatherIcon = document.querySelector('.weather-state-icon');
+const description = document.querySelector('.weather-desc');
+const highTemp = document.querySelector('.temp-high');
+const lowTemp = document.querySelector('.temp-low');
+const searchResetBtn = document.querySelector('.button-reset-search');
+const unitButton = document.querySelector('.button-unit-toggle');
+const speedUnit = document.querySelector('.speed-unit');
 
+const unitOptions = document.querySelectorAll('.unit-option');
 
-export function toggleSearch() {
+export function updateUnit(tempMode) {
+    if (!tempMode) {
+        unitOptions[0].classList.add("active");
+        unitOptions[1].classList.remove("active");
+    } else {
+        unitOptions[1].classList.add("active");
+        unitOptions[0].classList.remove("active");
+    }
+}
+function toggleSearch() {
     searchInput.classList.toggle('active');
-    searchBtn.classList.toggle('active')
+    searchBtn.classList.toggle('active');
     if (searchInput.classList.contains('active')) {
-        searchInput.focus()
+        searchInput.focus();
     } else {
         searchInput.value = "";
+        searchResetBtn.style.display = "none";
+        resultFrame.innerHTML= "";
     }
 }
 
@@ -34,17 +49,18 @@ function getIcon(id="000",icon="000") {
     if (!iconMapping[iconCode]) {
         iconCode="000-000"
     }
-    return iconFolder+iconMapping[iconCode]
+    return iconFolder+iconMapping[iconCode];
 
 }
-export function displayWeather(response,forecast,city){
+
+export function displayWeather(unit,response,forecast,city){
     cityName.innerHTML = city;
     temp.innerHTML = Math.round(response.main.temp);
     windSpeed.innerHTML = response.wind.speed;
     humidity.innerHTML= response.main.humidity;
     pressure.innerHTML = response.main.pressure;
     visibility.innerHTML = response.visibility/1000;
-
+    speedUnit.innerHTML = unit? "mph":"m/s";
     const midText = response.weather[0].description.length > 20 ? response.weather[0].main : response.weather[0].description;
     description.innerHTML = midText;
 
@@ -79,7 +95,7 @@ export function displayWeather(response,forecast,city){
     lowTemp.innerHTML = Math.round(tempMin);
 }
 
-export function getStringFromLocation(location) {
+function getStringFromLocation(location) {
     let locationStr = "";
     if (location.name) {
         locationStr+=location.name+", ";
@@ -130,3 +146,42 @@ export function displayWeatherError(){
 export function displaySearchError() {
     resultFrame.innerHTML='<p class="search-info">Search API Error</p>'
 }
+
+export function activateSearchEvent(searchFunction) {
+    searchBtn.addEventListener("click", () => {
+        if (searchInput.value.trim() !== "") {
+                searchFunction(searchInput.value);
+                return;
+        }
+        toggleSearch()
+    })
+
+    searchInput.addEventListener("keydown", (evnt)=> {
+        if (evnt.key === "Enter") {
+            searchFunction(searchInput.value);
+        }
+    })
+}
+
+searchInput.addEventListener("input", (event) => {
+    if (event.target.value !== "") {
+        searchResetBtn.style.display = "block";
+    } else {
+        searchResetBtn.style.display = "none";
+    }
+});
+
+searchResetBtn.addEventListener("click", (event)=>{
+    if (searchInput.classList.contains('active')) {
+        toggleSearch();
+    }
+});
+
+export function activateUnitToggle(tempMode,toggleFunction) {
+    updateUnit(tempMode);
+    unitButton.addEventListener("click", (event) => {
+        toggleFunction();
+    }); 
+}
+
+

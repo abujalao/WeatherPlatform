@@ -1,9 +1,9 @@
 const myApiKey = CONFIG.WEATHER_API_KEY;
+
 const SEARCH_RESULT_LIMIT = 5
 const FORECAST_STAMPS = 8;
-let tempMode = false //0 celsius, 1 fahrenheit
 
-export async function fetchForecast(lat,lon) {
+export async function fetchForecast(lat,lon,tempMode) {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}&cnt=${FORECAST_STAMPS}`);
         if (response.ok) {
@@ -16,7 +16,7 @@ export async function fetchForecast(lat,lon) {
     }
 }
 
-export async function fetchWeather(lat,lon) {
+export async function fetchWeather(lat,lon,tempMode) {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}`);
         if (response.ok) {

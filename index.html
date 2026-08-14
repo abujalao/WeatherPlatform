@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weatherly</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/src/favicon.png">
 </head>
 <body>
     <nav class="navigation">
@@ -13,14 +14,18 @@
         </div>
         <div class="nav-center">
             <button class="button-unit-toggle" id="unit-toggle">
-                <span class="unit-option active">&#176;C</span>
+                <span class="unit-option">&#176;C</span>
                 <span class="unit-option">&#176;F</span>
             </button>
         </div>
         <div class="nav-right">
 
             <div class="section-search">
-                <input class="input-search" placeholder="City name">
+                <div class="input-frame">
+                    <input class="input-search" placeholder="City name">
+                    <button class="button-reset-search">X</button>
+                </div>
+                
                 <div class="result-frame">
                     <div class="search-history-frame">
                     </div>
@@ -79,7 +84,7 @@
                     <img class="data-img" src="src/wind.png" > 
                     <div class="data-text-group">
                         <p class="data-name">Wind Speed</p>
-                        <p class="data-value"><span class="data-value-wind">-</span> <span class="speed-unit">km/h</span></p>
+                        <p class="data-value"><span class="data-value-wind">-</span> <span class="speed-unit">m/s</span></p>
                     </div>
                 </div>
 

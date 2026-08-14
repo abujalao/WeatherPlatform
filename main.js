@@ -2,19 +2,29 @@ import * as ui from './Modules/ui.js';
 import * as api from './Modules/api.js'
 import * as storage from './Modules/storage.js'
 
+
 async function setCity(location) {
     storage.saveCity(location);
     try{
+        const unit = storage.tempMode;
         const [weather, forecast] = await Promise.all([
-            api.fetchWeather(location.lat, location.lon),
-            api.fetchForecast(location.lat, location.lon)
+            api.fetchWeather(location.lat, location.lon,unit),
+            api.fetchForecast(location.lat, location.lon,unit)
         ]);
-        ui.displayWeather(weather, forecast,location.name);
+        ui.displayWeather(unit,weather, forecast,location.name);
     } catch (error) {
         console.error("API error:", error);
         ui.displayWeatherError();
     }
     ui.displaySearchResult(storage.getSearchHistory(),setCity,true);
+}
+
+function loadLastCity() {
+    const lastCity = storage.getLastSavedCity();
+
+    if (lastCity) {
+        setCity(lastCity);
+    }
 }
 
 async function searchLocation(userInput) {
@@ -27,23 +37,14 @@ async function searchLocation(userInput) {
     }
 }
 
-ui.searchBtn.addEventListener("click", () => {
-    if (ui.searchInput.value.trim() !== "") {
-            searchLocation(ui.searchInput.value);
-            return;
-    }
-    ui.toggleSearch()
-})
-
-ui.searchInput.addEventListener("keydown", (evnt)=> {
-    if (evnt.key === "Enter") {
-        searchLocation(ui.searchInput.value);
-    }
-})
-
-ui.displaySearchResult(storage.getSearchHistory(),setCity,true);
-const lastCity = storage.getLastSavedCity();
-
-if (lastCity) {
-    setCity(lastCity);
+async function toggleUnit() {
+    const tempMode = storage.toggleTempMode();
+    ui.updateUnit(tempMode);
+    loadLastCity(); //not optimal. api call just to change unit, maybe store it in storage.js and convert using calcualation
 }
+
+ui.activateSearchEvent(searchLocation);
+ui.activateUnitToggle(storage.tempMode ,toggleUnit);
+ui.displaySearchResult(storage.getSearchHistory(),setCity,true);
+loadLastCity();
+

@@ -1,4 +1,5 @@
 const profile = localStorage.getItem("searchHistory");
+export let tempMode = JSON.parse(localStorage.getItem('tempMode')) || false;  //false is metric , true is imperial
 let searchHistory = [];
 const HISTORY_LIMIT = 5;
 
@@ -19,6 +20,12 @@ export function saveCity(newLocation) {
     }  
 
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+
+export function toggleTempMode(){
+    tempMode=!tempMode;
+    localStorage.setItem('tempMode', JSON.stringify(tempMode));
+    return tempMode;
 }
 
 
