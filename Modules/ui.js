@@ -3,7 +3,8 @@ import { iconFolder, iconMapping } from './iconMapping.js';
 export const searchBtn = document.querySelector('.button-search');
 export const searchInput = document.querySelector('.input-search');
 
-const resultFrame = document.querySelector('.result-frame');
+const resultFrame = document.querySelector('.search-results-frame');
+const historyResultFrame = document.querySelector('.search-history-frame');
 
 const cityName = document.querySelector('.city-name')
 const temp = document.querySelector('.data-temp')
@@ -54,10 +55,11 @@ export function displayWeather(response,forecast,city){
                 <p class="forecast-time">Now</p>
                 <img class="forecast-icon" src="${getIcon(response.weather[0].id, response.weather[0].icon)}">
                 <p class="forecast-temp"><span class="forecast-value">${Math.round(response.main.temp)}</span>&#176;</p>
-            </div>`
+                </div>`
     let tempMax = response.main.temp;
     let tempMin = response.main.temp;
     const stampArray = forecast.list
+
     stampArray.forEach((stamp, index) => {
         const date = new Date((stamp.dt + forecast.city.timezone) * 1000);
         const timeString = date.toLocaleTimeString([], { timeZone: 'UTC', hour: 'numeric', minute: '2-digit' });
@@ -65,7 +67,7 @@ export function displayWeather(response,forecast,city){
                 <p class="forecast-time">${timeString}</p>
                 <img class="forecast-icon" src="${getIcon(stamp.weather[0].id, stamp.weather[0].icon)}">
                 <p class="forecast-temp"><span class="forecast-value">${Math.round(stamp.main.temp)}</span>&#176;</p>
-            </div>`
+                </div>`
         if (stamp.main.temp > tempMax) {
             tempMax= stamp.main.temp;
         } else if ((stamp.main.temp < tempMin)) {
@@ -77,36 +79,45 @@ export function displayWeather(response,forecast,city){
     lowTemp.innerHTML = Math.round(tempMin);
 }
 
-export function displaySearchResult(response, onCitySelect) {
-    resultFrame.innerHTML = "";
-    if (response.length === 0) {
-        resultFrame.innerHTML='<p class="search-info">No result found</p>'
+export function getStringFromLocation(location) {
+    let locationStr = "";
+    if (location.name) {
+        locationStr+=location.name+", ";
+    }
+    if (location.state && (location.name !== location.state)) {
+        locationStr+=location.state+", ";
+    }
+    if (location.country) {
+        locationStr+=location.country;
+    }
+    return locationStr;
+}
+
+function createSearchButton(isHistory,result,eventFunction) {
+    const button = document.createElement('button');
+    button.className = isHistory? 'button-result-history' : 'button-result';
+    if (isHistory) {
+        button.innerHTML = '<img src="src/history.png" class="search-history-icon">';
+    }
+    button.innerHTML+=result;
+    button.addEventListener('click', eventFunction);
+    return button;
+}
+
+export function displaySearchResult(response, onCitySelect,isHistory=false) {
+    const frame = isHistory? historyResultFrame : resultFrame;
+    frame.innerHTML = "";
+    if (!isHistory && response.length === 0) {
+        frame.innerHTML='<p class="search-info">No result found</p>'
     }
     response.forEach(location => {
-        let result = ""
-
-        if (location.name) {
-            result+=location.name+", ";
-        }
-        if (location.state && (location.name !== location.state)) {
-            result+=location.state+", ";
-        }
-        if (location.country) {
-            result+=location.country;
-        }
-
-        const button = document.createElement('button');
-        button.className = 'button-result';
-        button.textContent = result;
-        resultFrame.appendChild(button);
-
-        button.addEventListener('click', () => {
+        const result = getStringFromLocation(location);
+        const button = createSearchButton(isHistory,result, () => {
             onCitySelect(location);
-
             toggleSearch()
-            resultFrame.innerHTML = "";
+            frame.innerHTML = "";
         });
-        
+        frame.appendChild(button);
     });
 }
 

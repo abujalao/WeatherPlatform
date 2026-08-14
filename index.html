@@ -22,7 +22,11 @@
             <div class="section-search">
                 <input class="input-search" placeholder="City name">
                 <div class="result-frame">
-                    <!-- <button class="button-result">Dubai, UAE</button> -->
+                    <div class="search-history-frame">
+                    </div>
+                    <div class="search-results-frame">
+                    </div>
+                    
                 </div>
                 
             </div>
@@ -34,16 +38,19 @@
     </nav>
     <section class="section-main">
         <div class="main-info">
-            <h1 class="city-name">City</h1>
-            <h2 class="temp"><span class="data-temp">X</span>&#176;</h2>
+            <h1 class="city-name">---</h1>
+            <h2 class="temp"><span class="data-temp">-</span>&#176;</h2>
         </div>
         <div class="main-desc">
-            <h3 class="weather-desc">Desc</h3>
-            <p class="temp-center">H: <span class="temp-high">X</span>&#176;</p>
-            <p class="temp-center">L: <span class="temp-low">X</span>&#176;</p>
+            <h3 class="weather-desc">---</h3>
+            <div class="temp-center-frame">
+                <p class="temp-center">H: <span class="temp-high">-</span>&#176;</p>
+                <p class="temp-center">L: <span class="temp-low">-</span>&#176;</p>
+            </div> 
+            
         </div>
-        <div>
-            <img class="weather-state-icon" src="src/sunny.png">
+        <div class="main-icon-frame">
+            <img class="weather-state-icon" src="src/static/default.svg">
         </div>
         
     </section>
@@ -72,7 +79,7 @@
                     <img class="data-img" src="src/wind.png" > 
                     <div class="data-text-group">
                         <p class="data-name">Wind Speed</p>
-                        <p class="data-value"><span class="data-value-wind">X</span> <span class="speed-unit">km/h</span></p>
+                        <p class="data-value"><span class="data-value-wind">-</span> <span class="speed-unit">km/h</span></p>
                     </div>
                 </div>
 
@@ -80,7 +87,7 @@
                     <img class="data-img" src="src/humidity.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Humidity</p>
-                        <p class="data-value"><span class="data-value-humidity">X</span> %</p>
+                        <p class="data-value"><span class="data-value-humidity">-</span> %</p>
                     </div>
                 </div>
 
@@ -88,7 +95,7 @@
                     <img class="data-img" src="src/visibility.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Visibility</p>
-                        <p class="data-value"><span class="data-value-visibility">X</span> <span class="distance-unit">km</span></p>
+                        <p class="data-value"><span class="data-value-visibility">-</span> <span class="distance-unit">km</span></p>
                     </div>
                 </div>
 
@@ -96,7 +103,7 @@
                     <img class="data-img" src="src/pressure.png"> 
                     <div class="data-text-group">
                         <p class="data-name">Pressure</p>
-                        <p class="data-value"><span class="data-value-pressure">X</span> hPa</p>
+                        <p class="data-value"><span class="data-value-pressure">-</span> hPa</p>
                     </div>
                 </div>
 
@@ -107,6 +114,7 @@
 
     <script src="config.js"></script>
     <script type="module" src="Modules/api.js"></script>
+    <script type="module" src="Modules/storage.js"></script>
     <script type="module" src="Modules/ui.js"></script>
     <script type="module" src="main.js"></script>
 </body>
