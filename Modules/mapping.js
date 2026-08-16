@@ -126,3 +126,22 @@ export const iconMapping = {
     "804-04d": "80x-04x.svg",
     "804-04n": "80x-04x.svg"
 };
+
+
+export const weatherOverride = {
+    800: 'clear',
+    711: 'dust',
+    731: 'dust',
+    751: 'dust',
+    761: 'dust',
+    762: 'dust'
+};
+
+export const weatherCategories = {
+    2: 'thunderstorm',
+    3: 'rain',
+    5: 'rain',
+    6: 'snow',
+    7: 'fog',    
+    8: 'cloud' 
+};

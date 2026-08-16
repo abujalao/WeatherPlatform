@@ -8,13 +8,46 @@
   --secondary-text-color: rgba(254, 254, 254, 0.688);
 }
 
+html {
+    min-height: 100%;
+}
 body {
     background-color: var(--primary-bg-color);
     font-family: 'Roboto', sans-serif;
-    /*
-    background: linear-gradient(to top, rgb(230, 116, 81) 0%, rgb(42, 70, 142) 25%, rgb(42, 70, 142) 50%, rgb(42, 70, 142) 100%);
+    margin: 0; 
+}
+#weather-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    */
+    opacity: 0.1;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#weather-overlay.rain { background-image: url('src/background/rain.png'); }
+#weather-overlay.snow { background-image: url('src/background/snow.png'); }
+#weather-overlay.cloud { background-image: url('src/background/cloudy.png'); }
+#weather-overlay.thunder {background-image: url('src/background/thunder.png'); }
+#weather-overlay.night.clear {background-image: url('src/background/clearsky-night.png');}
+#weather-overlay.day.clear {background-image: url('src/background/clearsky-day.png');}
+#weather-overlay.fog {background-image: url('src/background/fog.png'); opacity: 0.3;}
+#weather-overlay.dust {background-image: url('src/background/dust.png'); opacity: 0.2;}
+
+.bg-sunrise { 
+    background: linear-gradient(180deg, rgb(106, 140, 175) 50%, rgb(255, 195, 160) 100%);
+ }
+.bg-day { 
+    background: linear-gradient(180deg, rgb(20, 99, 152) 0%, rgb(109, 213, 237) 100%);
+}
+.bg-sunset { 
+    background: linear-gradient(180deg, rgb(39, 65, 105) 50%, rgb(249, 137, 96) 100%); 
+}
+.bg-night { 
+    background: linear-gradient(180deg, rgb(7, 15, 19) 0%, rgb(49, 92, 110) 50%, rgb(62, 114, 136) 100%); 
 }
 
 p {

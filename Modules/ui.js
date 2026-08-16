@@ -1,4 +1,4 @@
-import { iconFolder, iconMapping } from './iconMapping.js';
+import { iconFolder, iconMapping, weatherOverride, weatherCategories } from './mapping.js';
 
 const searchBtn = document.querySelector('.button-search');
 const searchInput = document.querySelector('.input-search');
@@ -20,6 +20,8 @@ const lowTemp = document.querySelector('.temp-low');
 const searchResetBtn = document.querySelector('.button-reset-search');
 const unitButton = document.querySelector('.button-unit-toggle');
 const speedUnit = document.querySelector('.speed-unit');
+
+const weatherOverlay = document.getElementById('weather-overlay');
 
 const unitOptions = document.querySelectorAll('.unit-option');
 
@@ -53,28 +55,59 @@ function getIcon(id="000",icon="000") {
 
 }
 
-export function displayWeather(unit,response,forecast,city){
+
+function updateBG(weather) {
+    const timeToSunrise = weather.sys.sunrise - weather.dt;
+    const timeToSunset = weather.sys.sunset - weather.dt;
+    const minutesBeforeAfter = 45; //How many minutes before or after the event of sunrise/sunset to show style.
+    console.log("Time till sunset: "+timeToSunset)
+
+    document.body.className = "";
+    weatherOverlay.className = "";
+    if (Math.abs(timeToSunrise)<= minutesBeforeAfter*60) { 
+        document.body.classList.add("bg-sunrise");
+    } else if (Math.abs(timeToSunset)<= minutesBeforeAfter*60) {
+        document.body.classList.add("bg-sunset");
+    } else if (weather.sys.sunrise < weather.dt && weather.dt < weather.sys.sunset) {
+        document.body.classList.add("bg-day");
+        weatherOverlay.classList.add("day");
+    } else {
+        document.body.classList.add("bg-night");
+        weatherOverlay.classList.add("night");
+    }
+
+    const weatherId = weather.weather[0].id;
+    const category = Math.floor(weatherId/100);
+    const weatherClass = weatherOverride[weatherId] || weatherCategories[category];
+    
+    weatherOverlay.classList.add(weatherClass);
+
+}
+
+
+export function displayWeather(unit,weather,forecast,city){
     cityName.innerHTML = city;
-    temp.innerHTML = Math.round(response.main.temp);
-    windSpeed.innerHTML = response.wind.speed;
-    humidity.innerHTML= response.main.humidity;
-    pressure.innerHTML = response.main.pressure;
-    visibility.innerHTML = response.visibility/1000;
+    temp.innerHTML = Math.round(weather.main.temp);
+    windSpeed.innerHTML = weather.wind.speed;
+    humidity.innerHTML= weather.main.humidity;
+    pressure.innerHTML = weather.main.pressure;
+    visibility.innerHTML = weather.visibility/1000;
     speedUnit.innerHTML = unit? "mph":"m/s";
-    const midText = response.weather[0].description.length > 20 ? response.weather[0].main : response.weather[0].description;
+    const midText = weather.weather[0].description.length > 20 ? weather.weather[0].main : weather.weather[0].description;
     description.innerHTML = midText;
 
-    const imageAddress = getIcon(response.weather[0].id, response.weather[0].icon);
+    const imageAddress = getIcon(weather.weather[0].id, weather.weather[0].icon);
     mainWeatherIcon.src = imageAddress;
     forecastFrame.innerHTML=""
     let result=`<div class="forecast-item">
                 <p class="forecast-time">Now</p>
-                <img class="forecast-icon" src="${getIcon(response.weather[0].id, response.weather[0].icon)}">
-                <p class="forecast-temp"><span class="forecast-value">${Math.round(response.main.temp)}</span>&#176;</p>
+                <img class="forecast-icon" src="${getIcon(weather.weather[0].id, weather.weather[0].icon)}">
+                <p class="forecast-temp"><span class="forecast-value">${Math.round(weather.main.temp)}</span>&#176;</p>
                 </div>`
-    let tempMax = response.main.temp;
-    let tempMin = response.main.temp;
+    let tempMax = weather.main.temp;
+    let tempMin = weather.main.temp;
     const stampArray = forecast.list
+    updateBG(weather);
 
     stampArray.forEach((stamp, index) => {
         const date = new Date((stamp.dt + forecast.city.timezone) * 1000);
@@ -109,7 +142,7 @@ function getStringFromLocation(location) {
     return locationStr;
 }
 
-function createSearchButton(isHistory,result,eventFunction) {
+function createSearchResultButton(isHistory,result,eventFunction) {
     const button = document.createElement('button');
     button.className = isHistory? 'button-result-history' : 'button-result';
     if (isHistory) {
@@ -128,7 +161,7 @@ export function displaySearchResult(response, onCitySelect,isHistory=false) {
     }
     response.forEach(location => {
         const result = getStringFromLocation(location);
-        const button = createSearchButton(isHistory,result, () => {
+        const button = createSearchResultButton(isHistory,result, () => {
             onCitySelect(location);
             toggleSearch()
             frame.innerHTML = "";
@@ -147,20 +180,21 @@ export function displaySearchError() {
     resultFrame.innerHTML='<p class="search-info">Search API Error</p>'
 }
 
-export function activateSearchEvent(searchFunction) {
-    searchBtn.addEventListener("click", () => {
-        if (searchInput.value.trim() !== "") {
+function onSearch(searchFunction) {
+    if (searchInput.value.trim() !== "") {
                 searchFunction(searchInput.value);
                 return;
         }
         toggleSearch()
-    })
+}
+export function activateSearchEvent(searchFunction) {
+    searchBtn.addEventListener("click", () => onSearch(searchFunction));
 
     searchInput.addEventListener("keydown", (evnt)=> {
         if (evnt.key === "Enter") {
-            searchFunction(searchInput.value);
+            onSearch(searchFunction);
         }
-    })
+    });
 }
 
 searchInput.addEventListener("input", (event) => {
