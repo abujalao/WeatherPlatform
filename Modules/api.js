@@ -2,10 +2,12 @@ const myApiKey = CONFIG.WEATHER_API_KEY;
 
 const SEARCH_RESULT_LIMIT = 5
 const FORECAST_STAMPS = 8;
+const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5';
+const BASE_GEO_URL = 'https://api.openweathermap.org/geo/1.0';
 
 export async function fetchForecast(lat,lon,tempMode) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}&cnt=${FORECAST_STAMPS}`);
+        const response = await fetch(`${BASE_WEATHER_URL}/forecast?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}&cnt=${FORECAST_STAMPS}`);
         if (response.ok) {
             return await response.json();
         } else {
@@ -13,12 +15,13 @@ export async function fetchForecast(lat,lon,tempMode) {
         }
     } catch (error) {
         console.error('Fetch failed:', error);
+        throw error;
     }
 }
 
 export async function fetchWeather(lat,lon,tempMode) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}`);
+        const response = await fetch(`${BASE_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${tempMode? "imperial":"metric"}`);
         if (response.ok) {
             return await response.json();
         } else {
@@ -26,12 +29,13 @@ export async function fetchWeather(lat,lon,tempMode) {
         }
     } catch (error) {
         console.error('Fetch failed:', error);
+        throw error;
     }
 }
 
 export async function fetchLocation(userInput) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${userInput}&limit=${SEARCH_RESULT_LIMIT}&appid=${myApiKey}`);
+        const response = await fetch(`${BASE_GEO_URL}/direct?q=${userInput}&limit=${SEARCH_RESULT_LIMIT}&appid=${myApiKey}`);
         if (response.ok) {
             return await response.json();
         } else {
@@ -39,5 +43,6 @@ export async function fetchLocation(userInput) {
         }
     } catch (error) {
         console.error('Fetch failed:', error);
+        throw error;
     }
 }
