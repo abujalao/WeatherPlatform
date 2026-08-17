@@ -60,7 +60,6 @@ function updateBG(weather) {
     const timeToSunrise = weather.sys.sunrise - weather.dt;
     const timeToSunset = weather.sys.sunset - weather.dt;
     const minutesBeforeAfter = 45; //How many minutes before or after the event of sunrise/sunset to show style.
-    console.log("Time till sunset: "+timeToSunset)
 
     document.body.className = "";
     weatherOverlay.className = "";
@@ -81,7 +80,6 @@ function updateBG(weather) {
     const weatherClass = weatherOverride[weatherId] || weatherCategories[category];
     
     weatherOverlay.classList.add(weatherClass);
-
 }
 
 
@@ -168,6 +166,10 @@ export function displaySearchResult(response, onCitySelect,isHistory=false) {
         });
         frame.appendChild(button);
     });
+}
+
+export function displayNoCity() {
+    cityName.innerHTML = "Select A City";
 }
 
 export function displayWeatherError(){

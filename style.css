@@ -8,6 +8,22 @@
   --secondary-text-color: rgba(254, 254, 254, 0.688);
 }
 
+@property --bg-gradient1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: rgb(42, 70, 142);
+}
+@property --bg-gradient2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: rgb(42, 70, 142);
+}
+@property --bg-gradient3 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: rgb(42, 70, 142);
+}
+
 html {
     min-height: 100%;
 }
@@ -15,6 +31,10 @@ body {
     background-color: var(--primary-bg-color);
     font-family: 'Roboto', sans-serif;
     margin: 0; 
+    background: linear-gradient(180deg, var(--bg-gradient1) 0%, var(--bg-gradient2) 50%, var(--bg-gradient3) 100%);
+    transition: --bg-gradient1 1s ease-in-out, 
+                --bg-gradient2 1s ease-in-out, 
+                --bg-gradient3 1s ease-in-out;
 }
 #weather-overlay {
     position: fixed;
@@ -27,6 +47,8 @@ body {
     pointer-events: none;
     background-size: cover;
     background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    
 }
 #weather-overlay.rain { background-image: url('src/background/rain.png'); }
 #weather-overlay.snow { background-image: url('src/background/snow.png'); }
@@ -38,16 +60,24 @@ body {
 #weather-overlay.dust {background-image: url('src/background/dust.png'); opacity: 0.2;}
 
 .bg-sunrise { 
-    background: linear-gradient(180deg, rgb(106, 140, 175) 50%, rgb(255, 195, 160) 100%);
+    --bg-gradient1: rgb(106, 140, 175);
+    --bg-gradient2: rgb(106, 140, 175);
+    --bg-gradient3: rgb(255, 195, 160);
  }
 .bg-day { 
-    background: linear-gradient(180deg, rgb(20, 99, 152) 0%, rgb(109, 213, 237) 100%);
+    --bg-gradient1: rgb(20, 99, 152);
+    --bg-gradient2: rgb(60, 154, 194);  
+    --bg-gradient3: rgb(109, 213, 237);
 }
 .bg-sunset { 
-    background: linear-gradient(180deg, rgb(39, 65, 105) 50%, rgb(249, 137, 96) 100%); 
+    --bg-gradient1: rgb(39, 65, 105);
+    --bg-gradient2: rgb(39, 65, 105);  
+    --bg-gradient3: rgb(249, 137, 96);
 }
 .bg-night { 
-    background: linear-gradient(180deg, rgb(7, 15, 19) 0%, rgb(49, 92, 110) 50%, rgb(62, 114, 136) 100%); 
+    --bg-gradient1: rgb(7, 15, 19);
+    --bg-gradient2: rgb(49, 92, 110);
+    --bg-gradient3: rgb(62, 114, 136);
 }
 
 p {

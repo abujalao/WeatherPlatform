@@ -24,6 +24,8 @@ function loadLastCity() {
 
     if (lastCity) {
         setCity(lastCity);
+    } else {
+        ui.displayNoCity();
     }
 }
 
